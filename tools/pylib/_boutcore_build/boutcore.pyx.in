@@ -590,6 +590,12 @@ cdef extern from "bout.hxx":
     int BoutInitialise(int&, char **&)
     void BoutFinalise()
 
+cdef extern from "dlfcn.h":
+    void *dlopen(const char*&, int&)
+    unsigned int RTLD_NOW
+    unsigned int RTLD_GLOBAL
+    unsigned int RTLD_NOLOAD
+
 _isInit=False
 def init(args=[]):
     """init(args=[])
@@ -618,6 +624,7 @@ def init(args=[]):
         fu.append(tmp)
         string_buf[i]=<char*>fu[i]
     cdef int fuu=len(args)
+    dlopen("libmpi.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NOLOAD)
     ret=BoutInitialise(fuu,string_buf)
     free(string_buf)
     if ret:
