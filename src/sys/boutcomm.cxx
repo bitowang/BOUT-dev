@@ -27,7 +27,8 @@ void BoutComm::setComm(MPI_Comm c) {
 MPI_Comm BoutComm::getComm() {
   if(comm == MPI_COMM_NULL) {
     // No communicator set. Initialise MPI
-    MPI_Init(pargc,pargv);
+    //MPI_Init(pargc,pargv);
+    MPI_Init(nullptr,nullptr);
     
     // Duplicate MPI_COMM_WORLD
     MPI_Comm_dup(MPI_COMM_WORLD, &comm);
