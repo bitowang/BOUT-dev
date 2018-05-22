@@ -199,7 +199,7 @@ FCIMap::FCIMap(Mesh &mesh, int dir, bool zperiodic)
   interp->setMask(boundary_mask);
 }
 
-void FCITransform::calcYUpDown(Field3D &f) {
+void FCITransform::calcYUpDown(Field3D &f, REGION region) {
   TRACE("FCITransform::calcYUpDown");
 
   // Ensure that yup and ydown are different fields

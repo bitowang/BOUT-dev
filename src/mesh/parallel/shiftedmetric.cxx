@@ -657,7 +657,7 @@ Matrix< Array<dcomplex> > ShiftedMetric::getYdownPhs2(CELL_LOC location) {
 /*!
  * Calculate the Y up and down fields
  */
-void ShiftedMetric::calcYUpDown(Field3D &f) {
+void ShiftedMetric::calcYUpDown(Field3D &f, REGION region) {
   ASSERT1(&mesh == f.getMesh());
   f.splitYupYdown();
   CELL_LOC location = f.getLocation();

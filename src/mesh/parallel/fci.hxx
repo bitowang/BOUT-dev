@@ -83,7 +83,7 @@ public:
             throw BoutException("FCI method must use only one y-guard cell: set option myg=1");
         }
 
-  void calcYUpDown(Field3D &f) override;
+  void calcYUpDown(Field3D &f, REGION UNUSED(region) = RGN_NOX) override;
 
   const Field3D toFieldAligned(const Field3D &UNUSED(f), const REGION UNUSED(region)) override {
     throw BoutException("FCI method cannot transform into field aligned grid");

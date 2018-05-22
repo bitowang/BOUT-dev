@@ -31,7 +31,7 @@ public:
   virtual ~ParallelTransform() {}
 
   /// Given a 3D field, calculate and set the Y up down fields
-  virtual void calcYUpDown(Field3D &f) = 0;
+  virtual void calcYUpDown(Field3D &f, REGION region = RGN_NOX) = 0;
   
   /// Convert a 3D field into field-aligned coordinates
   /// so that the y index is along the magnetic field
@@ -59,7 +59,7 @@ public:
    * Merges the yup and ydown() fields of f, so that
    * f.yup() = f.ydown() = f
    */ 
-  void calcYUpDown(Field3D &f) override {f.mergeYupYdown();}
+  void calcYUpDown(Field3D &f, REGION UNUSED(region) = RGN_NOX) override {f.mergeYupYdown();}
   
   /*!
    * The field is already aligned in Y, so this
@@ -101,7 +101,7 @@ public:
    * Calculates the yup() and ydown() fields of f
    * by taking FFTs in Z and applying a phase shift.
    */ 
-  void calcYUpDown(Field3D &f) override;
+  void calcYUpDown(Field3D &f, REGION UNUSED(region)) override;
   
   /*!
    * Uses FFTs and a phase shift to align the grid points
@@ -223,10 +223,12 @@ public:
   
   /*!
    * Do not calculate yup() and ydown() fields of f
-   * for this method, force all callers to use
-   * toFieldAligned()/fromFieldAligned()
+   * for this method.
+   * Instead use this method to calculate f.field_fa.
+   * This is a bit hacky, but we can rename ParallelTransform::calcYUpDown to
+   * something more generic later.
    */ 
-  void calcYUpDown(Field3D &f) override {};
+  void calcYUpDown(Field3D &f, REGION region = RGN_NOX) override;
   
   /*!
    * Uses FFTs and a phase shift to align the grid points
@@ -236,7 +238,7 @@ public:
    * in X-Z, and the metric tensor will need to be changed 
    * if X derivatives are used.
    */
-  Field3D toFieldAligned(Field3D &f, const REGION region=RGN_NOX) override;
+  const Field3D toFieldAligned(const Field3D &f, const REGION region=RGN_NOX) override;
 
   /*!
    * Converts a field back to X-Z orthogonal coordinates
