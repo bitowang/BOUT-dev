@@ -61,6 +61,29 @@ Field3D &Field3D::operator*=(const Field3D &rhs) {
   } else {
     (*this) = (*this) * rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -119,6 +142,29 @@ Field3D &Field3D::operator/=(const Field3D &rhs) {
   } else {
     (*this) = (*this) / rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -177,6 +223,29 @@ Field3D &Field3D::operator+=(const Field3D &rhs) {
   } else {
     (*this) = (*this) + rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -235,6 +304,29 @@ Field3D &Field3D::operator-=(const Field3D &rhs) {
   } else {
     (*this) = (*this) - rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -298,6 +390,29 @@ Field3D &Field3D::operator*=(const Field2D &rhs) {
   } else {
     (*this) = (*this) * rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -362,6 +477,29 @@ Field3D &Field3D::operator/=(const Field2D &rhs) {
   } else {
     (*this) = (*this) / rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -425,6 +563,29 @@ Field3D &Field3D::operator+=(const Field2D &rhs) {
   } else {
     (*this) = (*this) + rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -488,6 +649,29 @@ Field3D &Field3D::operator-=(const Field2D &rhs) {
   } else {
     (*this) = (*this) - rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -526,6 +710,29 @@ Field3D &Field3D::operator*=(const BoutReal rhs) {
   } else {
     (*this) = (*this) * rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -564,6 +771,29 @@ Field3D &Field3D::operator/=(const BoutReal rhs) {
   } else {
     (*this) = (*this) / rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -602,6 +832,29 @@ Field3D &Field3D::operator+=(const BoutReal rhs) {
   } else {
     (*this) = (*this) + rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -640,6 +893,29 @@ Field3D &Field3D::operator-=(const BoutReal rhs) {
   } else {
     (*this) = (*this) - rhs;
   }
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -822,6 +1098,7 @@ Field2D &Field2D::operator*=(const Field2D &rhs) {
   } else {
     (*this) = (*this) * rhs;
   }
+
   return *this;
 }
 
@@ -880,6 +1157,7 @@ Field2D &Field2D::operator/=(const Field2D &rhs) {
   } else {
     (*this) = (*this) / rhs;
   }
+
   return *this;
 }
 
@@ -938,6 +1216,7 @@ Field2D &Field2D::operator+=(const Field2D &rhs) {
   } else {
     (*this) = (*this) + rhs;
   }
+
   return *this;
 }
 
@@ -996,6 +1275,7 @@ Field2D &Field2D::operator-=(const Field2D &rhs) {
   } else {
     (*this) = (*this) - rhs;
   }
+
   return *this;
 }
 
@@ -1034,6 +1314,7 @@ Field2D &Field2D::operator*=(const BoutReal rhs) {
   } else {
     (*this) = (*this) * rhs;
   }
+
   return *this;
 }
 
@@ -1072,6 +1353,7 @@ Field2D &Field2D::operator/=(const BoutReal rhs) {
   } else {
     (*this) = (*this) / rhs;
   }
+
   return *this;
 }
 
@@ -1110,6 +1392,7 @@ Field2D &Field2D::operator+=(const BoutReal rhs) {
   } else {
     (*this) = (*this) + rhs;
   }
+
   return *this;
 }
 
@@ -1148,6 +1431,7 @@ Field2D &Field2D::operator-=(const BoutReal rhs) {
   } else {
     (*this) = (*this) - rhs;
   }
+
   return *this;
 }
 

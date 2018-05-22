@@ -46,7 +46,7 @@
 /// Constructor
 Field3D::Field3D(Mesh *localmesh)
     : Field(localmesh), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
 #ifdef TRACK
   name = "<F3D>";
 #endif
@@ -75,7 +75,7 @@ Field3D::Field3D(const Field3D &f)
     : Field(f.fieldmesh),                // The mesh containing array sizes
       background(nullptr), data(f.data), // This handles references to the data array
       deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
 
   TRACE("Field3D(Field3D&)");
 
@@ -103,7 +103,7 @@ Field3D::Field3D(const Field3D &f)
 
 Field3D::Field3D(const Field2D &f)
     : Field(f.getMesh()), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
 
   TRACE("Field3D: Copy constructor from Field2D");
 
@@ -121,7 +121,7 @@ Field3D::Field3D(const Field2D &f)
 
 Field3D::Field3D(const BoutReal val, Mesh *localmesh)
     : Field(localmesh), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
 
   TRACE("Field3D: Copy constructor from value");
 
@@ -167,6 +167,8 @@ Field3D::~Field3D() {
   if((ydown2_field != this) && (ydown2_field != nullptr))
     delete ydown2_field;
   
+  if (field_fa != nullptr)
+    delete field_fa;
 }
 
 void Field3D::allocate() {
@@ -331,6 +333,20 @@ const Field3D& Field3D::ynext(int dir) const {
   }
 }
 
+
+Field3D& Field3D::fieldAligned() {
+  if (field_fa == nullptr) {
+    field_fa = new Field3D(getMesh());
+    field_fa->setLocation(location);
+  }
+  return *field_fa;
+}
+
+const Field3D& Field3D::fieldAligned() const {
+  ASSERT1(field_fa != nullptr);
+  return *field_fa;
+}
+
 void Field3D::setLocation(CELL_LOC new_location) {
   if (getMesh()->StaggerGrids) {
     if (new_location == CELL_VSHIFT) {
@@ -455,7 +471,29 @@ Field3D & Field3D::operator=(const Field3D &rhs) {
   data = rhs.data;
   
   location = rhs.location;
-  
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    yup2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+
   return *this;
 }
 
@@ -476,6 +514,28 @@ Field3D & Field3D::operator=(const Field2D &rhs) {
   
   /// Only 3D fields have locations for now
   //location = CELL_CENTRE;
+
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
   
   return *this;
 }
@@ -507,6 +567,28 @@ Field3D & Field3D::operator=(const BoutReal val) {
   //location = CELL_CENTRE;
   // DON'T RE-SET LOCATION
 
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr) {
+    delete yup1_field;
+    yup1_field = nullptr;
+  }
+  if (ydown1_field != nullptr) {
+    delete ydown1_field;
+    ydown1_field = nullptr;
+  }
+  if (yup2_field != nullptr) {
+    delete yup2_field;
+    yup2_field = nullptr;
+  }
+  if (ydown2_field != nullptr) {
+    delete ydown2_field;
+    ydown2_field = nullptr;
+  }
+  if (field_fa != nullptr) {
+    delete field_fa;
+    field_fa = nullptr;
+  }
+  
   return *this;
 }
 

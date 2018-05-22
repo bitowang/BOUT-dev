@@ -167,6 +167,11 @@ template <typename F> class Flexible;
 
       f.yup(1)(0,1,0) // ok
 
+  It is also useful to be able to access a version of the field interpolated
+  (in the z-direction) onto a field-aligned grid. This can be
+  calculated/accessed with the Mesh::toFieldAligned() and the main field can be
+  interpolated from a field-aligned one with Mesh::fromFieldAligned().
+
  */
 class Field3D : public Field, public FieldData {
  public:
@@ -255,6 +260,12 @@ class Field3D : public Field, public FieldData {
   /// Return yup(dir) if dir>0, and ydown(-dir) if dir<0
   Field3D& ynext(int dir);
   const Field3D& ynext(int dir) const;
+
+  /// Return reference to field-aligned field
+  Field3D& fieldAligned();
+
+  /// Return const reference to field-aligned field
+  const Field3D& fieldAligned() const;
 
   /// Set variable location for staggered grids to @param new_location
   ///
@@ -517,8 +528,11 @@ private:
   
   Field3D *deriv; ///< Time derivative (may be NULL)
 
-  /// Arrays of pointers to fields containing values along Y
+  /// Pointers to fields containing values along Y
   Field3D *yup1_field, *ydown1_field, *yup2_field, *ydown2_field;
+
+  /// Pointer to field containing the field-aligned version of the field
+  Field3D *field_fa;
 };
 
 // Non-member overloaded operators
