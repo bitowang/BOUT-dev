@@ -155,20 +155,7 @@ Field3D::~Field3D() {
     delete deriv;
   }
 
-  if((yup1_field != this) && (yup1_field != nullptr))
-    delete yup1_field;
-
-  if((ydown1_field != this) && (ydown1_field != nullptr))
-    delete ydown1_field;
-
-  if((yup2_field != this) && (yup2_field != nullptr))
-    delete yup2_field;
-
-  if((ydown2_field != this) && (ydown2_field != nullptr))
-    delete ydown2_field;
-  
-  if (field_fa != nullptr)
-    delete field_fa;
+  clearYupYdown();
 }
 
 void Field3D::allocate() {
@@ -220,14 +207,7 @@ void Field3D::mergeYupYdown() {
   if (yup1_field == this && ydown1_field == this)
     return;
 
-  if (yup1_field != nullptr)
-    delete yup1_field;
-  if (ydown1_field != nullptr)
-    delete ydown1_field;
-  if (yup2_field != nullptr)
-    delete yup2_field;
-  if (ydown2_field != nullptr)
-    delete ydown2_field;
+  clearYupYdown();
 
   yup1_field = this;
   ydown1_field = this;
@@ -235,6 +215,35 @@ void Field3D::mergeYupYdown() {
     yup2_field = this;
     ydown2_field = this;
   }
+}
+
+void Field3D::clearYupYdown() {
+  // Delete auxiliary fields if they have been set
+  if (yup1_field != nullptr && yup1_field != this) {
+    delete yup1_field;
+  }
+  yup1_field = nullptr;
+
+  if (ydown1_field != nullptr && ydown1_field != this) {
+    delete ydown1_field;
+  }
+  ydown1_field = nullptr;
+
+  if (yup2_field != nullptr && yup2_field != this) {
+    delete yup2_field;
+  }
+  yup2_field = nullptr;
+
+  if (ydown2_field != nullptr && ydown2_field != this) {
+    delete ydown2_field;
+  }
+  yup2_field = nullptr;
+
+  if (field_fa != nullptr && field_fa != this) {
+    delete field_fa;
+  }
+  has_field_aligned = false;
+  field_fa = nullptr;
 }
 
 Field3D& Field3D::yup(const int i) {
@@ -472,27 +481,7 @@ Field3D & Field3D::operator=(const Field3D &rhs) {
   
   location = rhs.location;
 
-  // Delete auxiliary fields if they have been set
-  if (yup1_field != nullptr) {
-    delete yup1_field;
-    yup1_field = nullptr;
-  }
-  if (ydown1_field != nullptr) {
-    delete ydown1_field;
-    ydown1_field = nullptr;
-  }
-  if (yup2_field != nullptr) {
-    delete yup2_field;
-    yup2_field = nullptr;
-  }
-  if (ydown2_field != nullptr) {
-    delete ydown2_field;
-    yup2_field = nullptr;
-  }
-  if (field_fa != nullptr) {
-    delete field_fa;
-    field_fa = nullptr;
-  }
+  clearYupYdown();
 
   return *this;
 }
@@ -515,28 +504,8 @@ Field3D & Field3D::operator=(const Field2D &rhs) {
   /// Only 3D fields have locations for now
   //location = CELL_CENTRE;
 
-  // Delete auxiliary fields if they have been set
-  if (yup1_field != nullptr) {
-    delete yup1_field;
-    yup1_field = nullptr;
-  }
-  if (ydown1_field != nullptr) {
-    delete ydown1_field;
-    ydown1_field = nullptr;
-  }
-  if (yup2_field != nullptr) {
-    delete yup2_field;
-    yup2_field = nullptr;
-  }
-  if (ydown2_field != nullptr) {
-    delete ydown2_field;
-    ydown2_field = nullptr;
-  }
-  if (field_fa != nullptr) {
-    delete field_fa;
-    field_fa = nullptr;
-  }
-  
+  clearYupYdown();
+
   return *this;
 }
 
@@ -567,27 +536,7 @@ Field3D & Field3D::operator=(const BoutReal val) {
   //location = CELL_CENTRE;
   // DON'T RE-SET LOCATION
 
-  // Delete auxiliary fields if they have been set
-  if (yup1_field != nullptr) {
-    delete yup1_field;
-    yup1_field = nullptr;
-  }
-  if (ydown1_field != nullptr) {
-    delete ydown1_field;
-    ydown1_field = nullptr;
-  }
-  if (yup2_field != nullptr) {
-    delete yup2_field;
-    yup2_field = nullptr;
-  }
-  if (ydown2_field != nullptr) {
-    delete ydown2_field;
-    ydown2_field = nullptr;
-  }
-  if (field_fa != nullptr) {
-    delete field_fa;
-    field_fa = nullptr;
-  }
+  clearYupYdown();
   
   return *this;
 }
