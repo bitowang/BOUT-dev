@@ -46,7 +46,8 @@
 /// Constructor
 Field3D::Field3D(Mesh *localmesh)
     : Field(localmesh), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr),
+      field_fa(nullptr), has_field_aligned(false) {
 #ifdef TRACK
   name = "<F3D>";
 #endif
@@ -75,7 +76,8 @@ Field3D::Field3D(const Field3D &f)
     : Field(f.fieldmesh),                // The mesh containing array sizes
       background(nullptr), data(f.data), // This handles references to the data array
       deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr),
+      field_fa(nullptr), has_field_aligned(false) {
 
   TRACE("Field3D(Field3D&)");
 
@@ -103,7 +105,8 @@ Field3D::Field3D(const Field3D &f)
 
 Field3D::Field3D(const Field2D &f)
     : Field(f.getMesh()), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr),
+      field_fa(nullptr), has_field_aligned(false) {
 
   TRACE("Field3D: Copy constructor from Field2D");
 
@@ -121,7 +124,8 @@ Field3D::Field3D(const Field2D &f)
 
 Field3D::Field3D(const BoutReal val, Mesh *localmesh)
     : Field(localmesh), background(nullptr), deriv(nullptr), yup1_field(nullptr),
-      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr), field_fa(nullptr) {
+      ydown1_field(nullptr), yup2_field(nullptr), ydown2_field(nullptr),
+      field_fa(nullptr), has_field_aligned(false) {
 
   TRACE("Field3D: Copy constructor from value");
 
@@ -345,6 +349,11 @@ const Field3D& Field3D::ynext(int dir) const {
 
 Field3D& Field3D::fieldAligned() {
   if (field_fa == nullptr) {
+    // has_field_aligned should be false now, until field_fa is set to a value.
+    // This should have been set either in the constructor or when field_fa was
+    // deleted.
+    ASSERT1(!has_field_aligned);
+
     field_fa = new Field3D(getMesh());
     field_fa->setLocation(location);
   }

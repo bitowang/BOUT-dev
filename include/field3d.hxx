@@ -250,6 +250,19 @@ class Field3D : public Field, public FieldData {
     return (yup1_field != nullptr) && (ydown1_field != nullptr);
   }
 
+  /// Check if this field has a field-aligned version
+  bool hasFieldAligned() const {
+    return has_field_aligned;
+  }
+
+  /// Set has_field_aligned
+  void setHasFieldAligned(bool val) {
+    if (val) {
+      ASSERT1(field_fa != nullptr && field_fa->isAllocated());
+    }
+    has_field_aligned = val;
+  }
+
   /// Return reference to yup field
   Field3D& yup(const int i = 1);
   
@@ -538,6 +551,7 @@ private:
 
   /// Pointer to field containing the field-aligned version of the field
   Field3D *field_fa;
+  bool has_field_aligned;
 };
 
 // Non-member overloaded operators
