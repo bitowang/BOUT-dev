@@ -13,10 +13,6 @@
 #include <bout/constants.hxx>
 
 #include <cmath>
-//#ifdef BACKTRACE
-#include <execinfo.h>
-#include <dlfcn.h>
-//#endif
 #include <msg_stack.hxx>
 
 #include <output.hxx>
