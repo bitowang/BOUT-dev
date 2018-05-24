@@ -320,6 +320,7 @@ const Field3D ShiftToFieldAligned::shiftZ(const Field3D &f, const Matrix< Array<
     return f; // Shifting makes no difference
 
   Field3D result(&mesh);
+  result.allocate();
   result.setLocation(f.getLocation());
   //result = 0.; // Set to value to avoid uninitialized value errors from Valgrind
 
