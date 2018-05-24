@@ -13,6 +13,11 @@
 #include <bout/constants.hxx>
 
 #include <cmath>
+//#ifdef BACKTRACE
+#include <execinfo.h>
+#include <dlfcn.h>
+//#endif
+#include <msg_stack.hxx>
 
 #include <output.hxx>
 
@@ -251,6 +256,7 @@ Matrix< Array<dcomplex> > ShiftToFieldAligned::getToAlignedPhs(CELL_LOC location
  * Calculate the field-aligned field
  */
 void ShiftToFieldAligned::calcYUpDown(Field3D &f, REGION region) {
+  ASSERT1(region == RGN_NOX || region == RGN_NOBNDRY);
   ASSERT1(&mesh == f.getMesh());
   CELL_LOC location = f.getLocation();
   
@@ -262,24 +268,39 @@ void ShiftToFieldAligned::calcYUpDown(Field3D &f, REGION region) {
   // cells.)
 
   Field3D& f_fa = f.fieldAligned();
-  f_fa.allocate();
-  f_fa.setLocation(location);
-  invalidateGuards(f_fa); // Won't set x-guard cells, so allow checking to throw exception if they are used.
-  Matrix< Array<dcomplex> > phases = getToAlignedPhs(location);
-  for(auto i : f.region2D(region)) {
-    shiftZ(f(i.x, i.y+1), phases(i.x, i.y), f_fa(i.x, i.y+1));
-  }
+  f_fa = shiftZ(f, getToAlignedPhs(f.getLocation()), region);
   f.setHasFieldAligned(true);
 }
-  
+
 /*!
- * Shift the field so that X-Z is not orthogonal,
+ * Get the shifted field so that X-Z is not orthogonal,
  * and Y is then field aligned.
  */
 const Field3D ShiftToFieldAligned::toFieldAligned(const Field3D &f, const REGION region) {
+  ASSERT1(region==RGN_NOX || region==RGN_NOBNDRY);
   if (f.hasFieldAligned()) {
     return f.fieldAligned();
   } else {
+#if CHECK > 1
+    static int count = 0;
+
+    if (count<100) {
+      // Get a trace of where we were called from
+      std::string message = msg_stack.getDump();
+
+      output<<"Warning:"<<endl;
+      output<<"Called toFieldAligned on a field without a field_fa member (i.e. f.hasFieldAligned()==false)."<<endl;
+      output<<"This may be suboptimal."<<endl;
+      output<<"Was called from:"<<endl;
+      output<<message<<endl;
+
+      count++;
+    } else if (count == 100) {
+      output<<"More than 100 warnings from ShiftToFieldAligned::toFieldAligned."<<endl
+        <<"Suppressing further output from here."<<endl;
+      count++;
+    }
+#endif
     return shiftZ(f, getToAlignedPhs(f.getLocation()), region);
   }
 }
@@ -300,7 +321,7 @@ const Field3D ShiftToFieldAligned::shiftZ(const Field3D &f, const Matrix< Array<
 
   Field3D result(&mesh);
   result.setLocation(f.getLocation());
-  result = 0.; // Set to value to avoid uninitialized value errors from Valgrind
+  //result = 0.; // Set to value to avoid uninitialized value errors from Valgrind
 
   invalidateGuards(result); // Won't set x-guard cells, so allow checking to throw exception if they are used.
   
