@@ -9,23 +9,50 @@ cxx=$($SCRIPTPATH/../../bin/bout-config --cxx)
 
 cxx=$(which $cxx)
 
-cxx_=
+# Recursively resolve the symlink to the compiler
+# At somepoint the path should contain whether mpich or openmpi is used
+
+# Store the list of all names
 all=
+
 while :
 do
+    # Append the current path
     all="$all $cxx"
-    cxx__=$(readlink $cxx)
-    test "$cxx__" || break
-    cxx_=$(which $cxx__)
-    echo $cxx_
-    test ".$cxx_" == ".$cxx" && break
-    cxx=$cxx_
+    # Resolve one level
+    read_cxx=$(readlink $cxx)
+    # If it should be empty, we are finished
+    test "$read_cxx" || break
+    # Check if which - in case this is not a full path
+    which_cxx=$(which $read_cxx)
+    # If the new file is the same as the old, we are finished
+    test ".$which_cxx" = ".$cxx" && break
+    # set the new found path as starting point for next iteration
+    cxx=$which_cxx
 done
+
+openmpi=
+mpich=
 
 if echo "$all"|grep mpich
 then
-    exit 0
-else
-    exit 1
+    mpich=1
 fi
 
+if echo "$all" |grep openmpi
+then
+    openmpi=1
+fi
+
+if test ( $openmpi -a -z $mpich ) -o ( -z $openmpi -a $mpich)
+then
+    if test $mpich
+    then
+        exit 0
+    else
+        exit 1
+    fi
+fi
+
+echo >/dev/stderr "Failed to detect the mpi version"
+exit 2
